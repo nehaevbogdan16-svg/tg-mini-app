@@ -8,56 +8,64 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #020617, #0f172a);
+      background: #020617;
       color: white;
       text-align: center;
-      padding-top: 50px;
+      padding-top: 60px;
     }
-    .score {
-      font-size: 48px;
-      margin: 30px 0;
+    h1 {
+      margin-bottom: 10px;
     }
-    .btn {
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: #22c55e;
-      color: black;
-      font-size: 26px;
+    #score {
+      font-size: 32px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 20px 50px;
+      font-size: 24px;
       border: none;
+      border-radius: 16px;
+      background: #22c55e;
       cursor: pointer;
-      box-shadow: 0 0 40px rgba(34,197,94,.6);
     }
   </style>
 </head>
 <body>
 
 <h1>🔥 Telegram Clicker</h1>
-<div class="score" id="score">0</div>
-<button class="btn" onclick="clicker()">TAP</button>
+<p id="user">Загрузка...</p>
+<div id="score">Очки: 0</div>
+
+<button onclick="clickMe()">КЛИК</button>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.expand();
 
-  let score = localStorage.getItem('score') || 0;
-  document.getElementById('score').innerText = score;
+  let score = 0;
+  const scoreEl = document.getElementById('score');
 
-  tg.MainButton.setText('Сбросить');
-  tg.MainButton.show();
+  // Пользователь
+  const user = tg.initDataUnsafe.user;
+  if (user) {
+    document.getElementById('user').innerText =
+      `Игрок: @${user.username || 'без ника'}`;
+  }
 
-  tg.MainButton.onClick(() => {
-    score = 0;
-    localStorage.setItem('score', score);
-    document.getElementById('score').innerText = score;
-    tg.showAlert('Счётчик сброшен');
+  // Загружаем сохранённый счёт
+  tg.CloudStorage.getItem('score', (err, value) => {
+    if (!err && value) {
+      score = parseInt(value);
+      scoreEl.innerText = `Очки: ${score}`;
+    }
   });
 
-  function clicker() {
+  function clickMe() {
     score++;
-    localStorage.setItem('score', score);
-    document.getElementById('score').innerText = score;
-    tg.HapticFeedback.impactOccurred('light');
+    scoreEl.innerText = `Очки: ${score}`;
+
+    // Сохраняем в Telegram
+    tg.CloudStorage.setItem('score', score.toString());
   }
 </script>
 

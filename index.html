@@ -2,170 +2,137 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Telegram Clicker</title>
+<title>RAVE MINI APP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
+  background: black;
+  overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #020617;
-  color: white;
-  text-align: center;
-  padding: 30px;
 }
-h1 { margin-bottom: 5px; }
-#score { font-size: 36px; margin: 10px 0; }
-#energy { margin-bottom: 20px; }
-button {
-  padding: 15px 35px;
-  font-size: 20px;
-  border: none;
-  border-radius: 14px;
-  background: #22c55e;
-  cursor: pointer;
-  margin: 10px;
+
+#rave {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #ff00ff, #000);
+  animation: pulse 1s infinite;
 }
-.shop, .leaders {
-  margin-top: 30px;
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 15px;
+
+@keyframes pulse {
+  0%   { filter: hue-rotate(0deg); }
+  50%  { filter: hue-rotate(180deg); }
+  100% { filter: hue-rotate(360deg); }
 }
-.item {
+
+#overlay {
+  position: fixed;
+  inset: 0;
   display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 10;
+  text-align: center;
+}
+
+h1 {
+  font-size: 42px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px #ff00ff;
+}
+
+#user {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+button {
+  padding: 18px 50px;
+  font-size: 22px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 25px #ff00ff;
+}
+
+#controls {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  z-index: 20;
+}
+
+input[type=range] {
+  width: 70%;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🔥 Telegram Clicker</h1>
-<p id="user">Загрузка...</p>
+<div id="rave"></div>
 
-<div id="score">Очки: 0</div>
-<div id="energy">⚡ Энергия: 10 / 10</div>
-
-<button onclick="clickMe()">КЛИК</button>
-
-<div class="shop">
-<h2>🛒 Магазин</h2>
-<div class="item">
-  <span>+1 за клик</span>
-  <button onclick="buyUpgrade()">Купить (50)</button>
-</div>
+<div id="overlay">
+  <h1>RAVE MODE</h1>
+  <div id="user">Загрузка...</div>
+  <button onclick="startRave()">START RAVE</button>
 </div>
 
-<div class="leaders">
-<h2>🏆 Лидерборд</h2>
-<div id="leaderboard">Пусто</div>
+<div id="controls" style="display:none">
+  <div>⚡ TEMPO</div>
+  <input type="range" min="200" max="2000" value="1000" id="tempo">
 </div>
 
 <script>
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-let score = 0;
-let power = 1;
-let energy = 10;
-let maxEnergy = 10;
-
-const scoreEl = document.getElementById('score');
-const energyEl = document.getElementById('energy');
-const leaderboardEl = document.getElementById('leaderboard');
-
-// Пользователь
+// USER
 const user = tg.initDataUnsafe.user;
-const userId = user?.id || Math.random();
-const username = user?.username || 'Игрок';
-
 document.getElementById('user').innerText =
-  `Игрок: @${username}`;
+  user ? `👤 @${user.username || 'RAVER'}` : 'RAVER';
 
-// Загрузка данных
-tg.CloudStorage.getItems(
-  ['score', 'power', 'energy', 'leaders'],
-  (err, data) => {
-    if (!err) {
-      score = parseInt(data.score) || 0;
-      power = parseInt(data.power) || 1;
-      energy = parseInt(data.energy) || maxEnergy;
-      updateUI();
-      updateLeaders();
-    }
-  }
-);
+// RAVE LOGIC
+let interval = null;
+const rave = document.getElementById('rave');
+const tempo = document.getElementById('tempo');
 
-function clickMe() {
-  if (energy <= 0) {
-    tg.showAlert('⚡ Нет энергии!');
-    return;
-  }
-  score += power;
-  energy--;
-  save();
-  updateUI();
+function startRave() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('controls').style.display = 'block';
+  tg.setHeaderColor('#000000');
+  tg.setBackgroundColor('#000000');
+
+  runRave(tempo.value);
 }
 
-function buyUpgrade() {
-  if (score < 50) {
-    tg.showAlert('❌ Недостаточно очков');
-    return;
-  }
-  score -= 50;
-  power++;
-  save();
-  updateUI();
+function runRave(speed) {
+  if (interval) clearInterval(interval);
+  interval = setInterval(() => {
+    rave.style.background =
+      `radial-gradient(circle at ${Math.random()*100}% ${Math.random()*100}%,
+      hsl(${Math.random()*360},100%,60%), black)`;
+  }, speed);
 }
 
-function updateUI() {
-  scoreEl.innerText = `Очки: ${score}`;
-  energyEl.innerText = `⚡ Энергия: ${energy} / ${maxEnergy}`;
-}
+tempo.oninput = () => runRave(tempo.value);
 
-// Сохранение + лидерборд
-function save() {
-  tg.CloudStorage.setItem('score', score.toString());
-  tg.CloudStorage.setItem('power', power.toString());
-  tg.CloudStorage.setItem('energy', energy.toString());
-
-  tg.CloudStorage.getItem('leaders', (err, value) => {
-    let leaders = value ? JSON.parse(value) : {};
-    leaders[userId] = { username, score };
-    tg.CloudStorage.setItem('leaders', JSON.stringify(leaders));
-    updateLeaders(leaders);
-  });
-}
-
-// Лидерборд
-function updateLeaders(data) {
-  if (!data) {
-    tg.CloudStorage.getItem('leaders', (e, v) => {
-      if (v) updateLeaders(JSON.parse(v));
-    });
-    return;
-  }
-
-  const sorted = Object.values(data)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5);
-
-  leaderboardEl.innerHTML = sorted
-    .map((u, i) => `#${i + 1} ${u.username}: ${u.score}`)
-    .join('<br>');
-}
-
-// Реген энергии
+// STROBE
 setInterval(() => {
-  if (energy < maxEnergy) {
-    energy++;
-    save();
-    updateUI();
+  if (Math.random() > 0.8) {
+    document.body.style.background = 'white';
+    setTimeout(() => document.body.style.background = 'black', 50);
   }
-}, 5000);
+}, 500);
 </script>
 
 </body>

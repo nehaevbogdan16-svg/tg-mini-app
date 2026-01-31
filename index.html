@@ -1,72 +1,171 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Telegram Clicker</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #020617;
-      color: white;
-      text-align: center;
-      padding-top: 60px;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    #score {
-      font-size: 32px;
-      margin: 20px 0;
-    }
-    button {
-      padding: 20px 50px;
-      font-size: 24px;
-      border: none;
-      border-radius: 16px;
-      background: #22c55e;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Telegram Clicker</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #020617;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+h1 { margin-bottom: 5px; }
+#score { font-size: 36px; margin: 10px 0; }
+#energy { margin-bottom: 20px; }
+button {
+  padding: 15px 35px;
+  font-size: 20px;
+  border: none;
+  border-radius: 14px;
+  background: #22c55e;
+  cursor: pointer;
+  margin: 10px;
+}
+.shop, .leaders {
+  margin-top: 30px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 15px;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+</style>
 </head>
+
 <body>
 
 <h1>🔥 Telegram Clicker</h1>
 <p id="user">Загрузка...</p>
+
 <div id="score">Очки: 0</div>
+<div id="energy">⚡ Энергия: 10 / 10</div>
 
 <button onclick="clickMe()">КЛИК</button>
 
+<div class="shop">
+<h2>🛒 Магазин</h2>
+<div class="item">
+  <span>+1 за клик</span>
+  <button onclick="buyUpgrade()">Купить (50)</button>
+</div>
+</div>
+
+<div class="leaders">
+<h2>🏆 Лидерборд</h2>
+<div id="leaderboard">Пусто</div>
+</div>
+
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.expand();
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-  let score = 0;
-  const scoreEl = document.getElementById('score');
+let score = 0;
+let power = 1;
+let energy = 10;
+let maxEnergy = 10;
 
-  // Пользователь
-  const user = tg.initDataUnsafe.user;
-  if (user) {
-    document.getElementById('user').innerText =
-      `Игрок: @${user.username || 'без ника'}`;
-  }
+const scoreEl = document.getElementById('score');
+const energyEl = document.getElementById('energy');
+const leaderboardEl = document.getElementById('leaderboard');
 
-  // Загружаем сохранённый счёт
-  tg.CloudStorage.getItem('score', (err, value) => {
-    if (!err && value) {
-      score = parseInt(value);
-      scoreEl.innerText = `Очки: ${score}`;
+// Пользователь
+const user = tg.initDataUnsafe.user;
+const userId = user?.id || Math.random();
+const username = user?.username || 'Игрок';
+
+document.getElementById('user').innerText =
+  `Игрок: @${username}`;
+
+// Загрузка данных
+tg.CloudStorage.getItems(
+  ['score', 'power', 'energy', 'leaders'],
+  (err, data) => {
+    if (!err) {
+      score = parseInt(data.score) || 0;
+      power = parseInt(data.power) || 1;
+      energy = parseInt(data.energy) || maxEnergy;
+      updateUI();
+      updateLeaders();
     }
-  });
-
-  function clickMe() {
-    score++;
-    scoreEl.innerText = `Очки: ${score}`;
-
-    // Сохраняем в Telegram
-    tg.CloudStorage.setItem('score', score.toString());
   }
+);
+
+function clickMe() {
+  if (energy <= 0) {
+    tg.showAlert('⚡ Нет энергии!');
+    return;
+  }
+  score += power;
+  energy--;
+  save();
+  updateUI();
+}
+
+function buyUpgrade() {
+  if (score < 50) {
+    tg.showAlert('❌ Недостаточно очков');
+    return;
+  }
+  score -= 50;
+  power++;
+  save();
+  updateUI();
+}
+
+function updateUI() {
+  scoreEl.innerText = `Очки: ${score}`;
+  energyEl.innerText = `⚡ Энергия: ${energy} / ${maxEnergy}`;
+}
+
+// Сохранение + лидерборд
+function save() {
+  tg.CloudStorage.setItem('score', score.toString());
+  tg.CloudStorage.setItem('power', power.toString());
+  tg.CloudStorage.setItem('energy', energy.toString());
+
+  tg.CloudStorage.getItem('leaders', (err, value) => {
+    let leaders = value ? JSON.parse(value) : {};
+    leaders[userId] = { username, score };
+    tg.CloudStorage.setItem('leaders', JSON.stringify(leaders));
+    updateLeaders(leaders);
+  });
+}
+
+// Лидерборд
+function updateLeaders(data) {
+  if (!data) {
+    tg.CloudStorage.getItem('leaders', (e, v) => {
+      if (v) updateLeaders(JSON.parse(v));
+    });
+    return;
+  }
+
+  const sorted = Object.values(data)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  leaderboardEl.innerHTML = sorted
+    .map((u, i) => `#${i + 1} ${u.username}: ${u.score}`)
+    .join('<br>');
+}
+
+// Реген энергии
+setInterval(() => {
+  if (energy < maxEnergy) {
+    energy++;
+    save();
+    updateUI();
+  }
+}, 5000);
 </script>
 
 </body>

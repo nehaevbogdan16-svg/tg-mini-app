@@ -2,137 +2,97 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>RAVE MINI APP</title>
+<title>Tournaments Mini App</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
-  background: black;
-  overflow: hidden;
   font-family: Arial, sans-serif;
-}
-
-#rave {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #ff00ff, #000);
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0%   { filter: hue-rotate(0deg); }
-  50%  { filter: hue-rotate(180deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-
-#overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background: #020617;
   color: white;
-  z-index: 10;
+}
+header {
+  padding: 15px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
   text-align: center;
 }
-
-h1 {
-  font-size: 42px;
-  letter-spacing: 4px;
-  text-shadow: 0 0 20px #ff00ff;
+.tournament {
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  margin: 15px;
+  padding: 15px;
 }
-
-#user {
-  opacity: 0.7;
-  margin-bottom: 30px;
-}
-
 button {
-  padding: 18px 50px;
-  font-size: 22px;
+  margin-top: 10px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #ff00ff, #00ffff);
-  color: black;
+  border-radius: 10px;
+  background: #22c55e;
   cursor: pointer;
-  box-shadow: 0 0 25px #ff00ff;
 }
-
-#controls {
-  position: fixed;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  z-index: 20;
-}
-
-input[type=range] {
-  width: 70%;
+input {
+  width: 90%;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 8px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="rave"></div>
-
-<div id="overlay">
-  <h1>RAVE MODE</h1>
+<header>
+  <h2>🏆 Турниры</h2>
   <div id="user">Загрузка...</div>
-  <button onclick="startRave()">START RAVE</button>
-</div>
+</header>
 
-<div id="controls" style="display:none">
-  <div>⚡ TEMPO</div>
-  <input type="range" min="200" max="2000" value="1000" id="tempo">
-</div>
+<div id="list"></div>
 
 <script>
-const tg = window.Telegram.WebApp;
+const tg = Telegram.WebApp;
 tg.expand();
 
-// USER
 const user = tg.initDataUnsafe.user;
-document.getElementById('user').innerText =
-  user ? `👤 @${user.username || 'RAVER'}` : 'RAVER';
+const username = user?.username || 'player';
+document.getElementById('user').innerText = `👤 @${username}`;
 
-// RAVE LOGIC
-let interval = null;
-const rave = document.getElementById('rave');
-const tempo = document.getElementById('tempo');
+// ДЕМО-ТУРНИРЫ
+const tournaments = [
+  { id: 1, name: 'PUBG SOLO CUP', date: '10 Feb', prize: '5 000₽' },
+  { id: 2, name: 'PUBG DUO NIGHT', date: '15 Feb', prize: '10 000₽' }
+];
 
-function startRave() {
-  document.getElementById('overlay').style.display = 'none';
-  document.getElementById('controls').style.display = 'block';
-  tg.setHeaderColor('#000000');
-  tg.setBackgroundColor('#000000');
+const list = document.getElementById('list');
 
-  runRave(tempo.value);
-}
+tournaments.forEach(t => {
+  const div = document.createElement('div');
+  div.className = 'tournament';
+  div.innerHTML = `
+    <h3>${t.name}</h3>
+    <p>📅 ${t.date}</p>
+    <p>💰 ${t.prize}</p>
+    <input placeholder="Ник в игре" id="nick-${t.id}">
+    <button onclick="register(${t.id})">Участвовать</button>
+  `;
+  list.appendChild(div);
+});
 
-function runRave(speed) {
-  if (interval) clearInterval(interval);
-  interval = setInterval(() => {
-    rave.style.background =
-      `radial-gradient(circle at ${Math.random()*100}% ${Math.random()*100}%,
-      hsl(${Math.random()*360},100%,60%), black)`;
-  }, speed);
-}
-
-tempo.oninput = () => runRave(tempo.value);
-
-// STROBE
-setInterval(() => {
-  if (Math.random() > 0.8) {
-    document.body.style.background = 'white';
-    setTimeout(() => document.body.style.background = 'black', 50);
+function register(id) {
+  const nick = document.getElementById(`nick-${id}`).value;
+  if (!nick) {
+    tg.showAlert('Введите ник');
+    return;
   }
-}, 500);
+
+  tg.CloudStorage.setItem(
+    `tournament_${id}`,
+    JSON.stringify({ user: username, nick }),
+    () => tg.showAlert('✅ Вы зарегистрированы')
+  );
+}
 </script>
 
 </body>

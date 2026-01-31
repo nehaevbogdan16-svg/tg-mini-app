@@ -2,49 +2,62 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Telegram Mini App</title>
+  <title>Telegram Clicker</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f172a;
+      background: linear-gradient(180deg, #020617, #0f172a);
       color: white;
       text-align: center;
-      padding-top: 60px;
+      padding-top: 50px;
     }
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 12px;
+    .score {
+      font-size: 48px;
+      margin: 30px 0;
+    }
+    .btn {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
       background: #22c55e;
+      color: black;
+      font-size: 26px;
+      border: none;
       cursor: pointer;
+      box-shadow: 0 0 40px rgba(34,197,94,.6);
     }
   </style>
 </head>
 <body>
 
-<h1>🚀 Mini App</h1>
-<p id="user">Загрузка...</p>
-
-<button onclick="tap()">Нажми</button>
+<h1>🔥 Telegram Clicker</h1>
+<div class="score" id="score">0</div>
+<button class="btn" onclick="clicker()">TAP</button>
 
 <script>
   const tg = window.Telegram.WebApp;
   tg.expand();
 
-  const user = tg.initDataUnsafe.user;
-  if (user) {
-    document.getElementById('user').innerText =
-      `Привет, @${user.username || 'без ника'} (ID: ${user.id})`;
-  } else {
-    document.getElementById('user').innerText =
-      'Открой Mini App через Telegram';
-  }
+  let score = localStorage.getItem('score') || 0;
+  document.getElementById('score').innerText = score;
 
-  function tap() {
-    tg.showAlert('🔥 Mini App работает!');
+  tg.MainButton.setText('Сбросить');
+  tg.MainButton.show();
+
+  tg.MainButton.onClick(() => {
+    score = 0;
+    localStorage.setItem('score', score);
+    document.getElementById('score').innerText = score;
+    tg.showAlert('Счётчик сброшен');
+  });
+
+  function clicker() {
+    score++;
+    localStorage.setItem('score', score);
+    document.getElementById('score').innerText = score;
+    tg.HapticFeedback.impactOccurred('light');
   }
 </script>
 

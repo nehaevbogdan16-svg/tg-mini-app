@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram Mini App</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding-top: 60px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: #22c55e;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🚀 Mini App</h1>
+<p id="user">Загрузка...</p>
+
+<button onclick="tap()">Нажми</button>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  const user = tg.initDataUnsafe.user;
+  if (user) {
+    document.getElementById('user').innerText =
+      `Привет, @${user.username || 'без ника'} (ID: ${user.id})`;
+  } else {
+    document.getElementById('user').innerText =
+      'Открой Mini App через Telegram';
+  }
+
+  function tap() {
+    tg.showAlert('🔥 Mini App работает!');
+  }
+</script>
+
+</body>
+</html>

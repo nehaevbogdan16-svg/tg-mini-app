@@ -1,188 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CITADEL | PUBG Mobile Tournaments</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
-}
-
-body {
-    background: radial-gradient(circle at top, #0f2027, #000);
-    color: #fff;
-}
-
-header {
-    padding: 40px 20px;
-    text-align: center;
-    background: linear-gradient(90deg, #111, #1c1c1c);
-    border-bottom: 2px solid #ffb300;
-}
-
-header h1 {
-    font-size: 36px;
-    letter-spacing: 4px;
-    color: #ffb300;
-}
-
-header p {
-    margin-top: 10px;
-    opacity: 0.8;
-}
-
-section {
-    padding: 60px 20px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.title {
-    font-size: 28px;
-    margin-bottom: 30px;
-    border-left: 5px solid #ffb300;
-    padding-left: 15px;
-}
-
-.tournaments {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-}
-
-.card {
-    background: #111;
-    border: 1px solid #333;
-    padding: 25px;
-    border-radius: 12px;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    border-color: #ffb300;
-}
-
-.card h3 {
-    color: #ffb300;
-    margin-bottom: 15px;
-}
-
-.card p {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 10px;
-}
-
-.register {
-    background: #0d0d0d;
-    border-radius: 15px;
-}
-
-form {
-    display: grid;
-    gap: 15px;
-    max-width: 450px;
-}
-
-input, button {
-    padding: 14px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-input {
-    background: #1c1c1c;
-    color: #fff;
-    border: 1px solid #333;
-}
-
-button {
-    background: #ffb300;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #ffc933;
-}
-
-footer {
-    padding: 30px;
-    text-align: center;
-    background: #090909;
-    border-top: 1px solid #222;
-    opacity: 0.8;
-}
-
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 26px;
-    }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Магазин</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>CITADEL</h1>
-    <p>Турниры PUBG Mobile от клана Цитадель</p>
+  <h1>🛒 Мой магазин</h1>
+  <button id="cartBtn">Корзина (<span id="cartCount">0</span>)</button>
 </header>
 
-<section>
-    <div class="title">О турнирах</div>
-    <p>
-        Клан <b>CITADEL</b> проводит регулярные турниры по PUBG Mobile.
-        Честная игра, грамотные судьи и реальные призы.
-        Присоединяйся и докажи, что твой отряд — лучший.
-    </p>
-</section>
+<main>
+  <section class="products" id="products"></section>
+</main>
 
-<section>
-    <div class="title">Активные турниры</div>
-    <div class="tournaments">
-        <div class="card">
-            <h3>CITADEL CUP #1</h3>
-            <p>📅 Дата: 15 февраля</p>
-            <p>👥 Формат: Squad</p>
-            <p>💰 Призовой фонд: 10 000₽</p>
-        </div>
-        <div class="card">
-            <h3>Night Battle</h3>
-            <p>📅 Дата: 22 февраля</p>
-            <p>👥 Формат: Duo</p>
-            <p>💰 Призовой фонд: 5 000₽</p>
-        </div>
-        <div class="card">
-            <h3>Solo Kings</h3>
-            <p>📅 Дата: 1 марта</p>
-            <p>👤 Формат: Solo</p>
-            <p>💰 Призовой фонд: 3 000₽</p>
-        </div>
-    </div>
-</section>
+<div class="cart" id="cart">
+  <h2>Корзина</h2>
+  <ul id="cartItems"></ul>
+  <p><strong>Итого:</strong> <span id="total">0</span> ₽</p>
+  <button onclick="closeCart()">Закрыть</button>
+</div>
 
-<section class="register">
-    <div class="title">Регистрация команды</div>
-    <form onsubmit="event.preventDefault(); alert('Заявка отправлена! Мы свяжемся с вами в Telegram');">
-        <input type="text" placeholder="Название команды" required>
-        <input type="text" placeholder="Ник капитана" required>
-        <input type="text" placeholder="Telegram для связи" required>
-        <button type="submit">Отправить заявку</button>
-    </form>
-</section>
-
-<footer>
-    © 2026 CITADEL Clan • PUBG Mobile Tournaments  
-    <br>Связь: Telegram @citadel_clan
-</footer>
-
+<script src="script.js"></script>
 </body>
 </html>

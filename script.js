@@ -1,3 +1,6 @@
+const tg = window.Telegram.WebApp;
+tg.expand(); // разворачиваем мини-апп на весь экран
+
 const products = [
   { id: 1, name: "Товар 1", price: 1200 },
   { id: 2, name: "Товар 2", price: 850 },
@@ -5,12 +8,7 @@ const products = [
 ];
 
 const cart = [];
-
 const productsDiv = document.getElementById("products");
-const cartDiv = document.getElementById("cart");
-const cartItems = document.getElementById("cartItems");
-const totalEl = document.getElementById("total");
-const cartCount = document.getElementById("cartCount");
 
 products.forEach(p => {
   const el = document.createElement("div");
@@ -26,26 +24,14 @@ products.forEach(p => {
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   cart.push(product);
-  updateCart();
+
+  tg.MainButton.setText(`Оформить заказ (${cart.length})`);
+  tg.MainButton.show();
 }
 
-function updateCart() {
-  cartItems.innerHTML = "";
-  let total = 0;
-  cart.forEach(item => {
-    total += item.price;
-    const li = document.createElement("li");
-    li.textContent = `${item.name} — ${item.price} ₽`;
-    cartItems.appendChild(li);
-  });
-  totalEl.textContent = total;
-  cartCount.textContent = cart.length;
-}
-
-document.getElementById("cartBtn").onclick = () => {
-  cartDiv.style.display = "block";
-};
-
-function closeCart() {
-  cartDiv.style.display = "none";
-}
+tg.MainButton.onClick(() => {
+  tg.sendData(JSON.stringify({
+    action: "order",
+    items: cart
+  }));
+});

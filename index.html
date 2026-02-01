@@ -3,26 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Магазин</title>
+  <title>Telegram Shop</title>
+
+  <!-- Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1>🛒 Мой магазин</h1>
-  <button id="cartBtn">Корзина (<span id="cartCount">0</span>)</button>
+  <h1>🛒 Магазин</h1>
 </header>
 
 <main>
   <section class="products" id="products"></section>
 </main>
-
-<div class="cart" id="cart">
-  <h2>Корзина</h2>
-  <ul id="cartItems"></ul>
-  <p><strong>Итого:</strong> <span id="total">0</span> ₽</p>
-  <button onclick="closeCart()">Закрыть</button>
-</div>
 
 <script src="script.js"></script>
 </body>

@@ -1,57 +1,41 @@
+:root {
+  --bg: var(--tg-theme-bg-color, #f6f6f6);
+  --text: var(--tg-theme-text-color, #000);
+  --button: var(--tg-theme-button-color, #2ea6ff);
+  --button-text: var(--tg-theme-button-text-color, #fff);
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f6f6f6;
+  background: var(--bg);
+  color: var(--text);
 }
 
 header {
-  background: #111;
-  color: white;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-button {
-  cursor: pointer;
-  padding: 8px 12px;
-  border: none;
-  background: #ff6600;
-  color: white;
-  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 12px;
 }
 
 .product {
   background: white;
-  padding: 15px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.product button {
+  width: 100%;
+  padding: 8px;
+  background: var(--button);
+  color: var(--button-text);
+  border: none;
   border-radius: 6px;
-}
-
-.product h3 {
-  margin: 0 0 10px;
-}
-
-.cart {
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 300px;
-  height: 100%;
-  background: white;
-  padding: 20px;
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-  display: none;
-}
-
-.cart ul {
-  padding: 0;
-  list-style: none;
 }

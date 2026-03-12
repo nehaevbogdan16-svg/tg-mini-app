@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>РУС — Новый продукт</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial;
+}
+
+body{
+background:linear-gradient(135deg,#081521,#0e2a3f,#081521);
+color:white;
+line-height:1.6;
+}
+
+/* контейнер */
+
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+}
+
+/* header */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:30px 0;
+}
+
+.logo img{
+height:90px;
+}
+
+nav a{
+background:#19a9ff;
+padding:12px 25px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+font-weight:600;
+transition:0.3s;
+}
+
+nav a:hover{
+background:#0084d6;
+transform:translateY(-2px);
+}
+
+/* hero */
+
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+flex-wrap:wrap;
+padding:80px 0;
+gap:40px;
+}
+
+.hero-text{
+max-width:520px;
+}
+
+.hero-text h1{
+font-size:48px;
+margin-bottom:20px;
+}
+
+.hero-text p{
+font-size:18px;
+opacity:0.85;
+margin-bottom:30px;
+}
+
+.btn{
+background:#1ea7ff;
+padding:16px 35px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+font-weight:600;
+display:inline-block;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#0f8bd6;
+transform:translateY(-3px);
+}
+
+.hero-img img{
+width:420px;
+max-width:100%;
+filter:drop-shadow(0 0 20px rgba(0,150,255,0.6));
+}
+
+/* преимущества */
+
+.features{
+padding:80px 0;
+text-align:center;
+}
+
+.features h2{
+font-size:32px;
+margin-bottom:50px;
+}
+
+.cards{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+padding:35px;
+border-radius:15px;
+width:260px;
+transition:0.3s;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.card:hover{
+transform:translateY(-10px);
+background:rgba(255,255,255,0.08);
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+/* галерея */
+
+.gallery{
+padding:80px 0;
+text-align:center;
+}
+
+.gallery h2{
+margin-bottom:40px;
+font-size:32px;
+}
+
+.gallery img{
+width:260px;
+margin:10px;
+border-radius:12px;
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* контакты */
+
+.contacts{
+padding:80px 0;
+text-align:center;
+}
+
+.contacts h2{
+margin-bottom:30px;
+font-size:32px;
+}
+
+.contacts p{
+margin:10px 0;
+font-size:18px;
+}
+
+/* footer */
+
+footer{
+background:#050d14;
+padding:30px;
+text-align:center;
+margin-top:50px;
+font-size:14px;
+opacity:0.8;
+}
+
+/* адаптив */
+
+@media(max-width:900px){
+
+.hero{
+flex-direction:column;
+text-align:center;
+}
+
+.hero-img img{
+width:320px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<header>
+
+<div class="logo">
+<img src="logo.png">
+</div>
+
+<nav>
+<a href="#contacts">Контакты</a>
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>Новый продукт</h1>
+
+<p>
+Описание вашей химической продукции.
+Вы можете легко изменить этот текст и рассказать о свойствах,
+применении и преимуществах продукта.
+</p>
+
+<a href="#contacts" class="btn">Связаться</a>
+
+</div>
+
+<div class="hero-img">
+
+<img src="product.png">
+
+</div>
+
+</section>
+
+
+<section class="features">
+
+<h2>Преимущества</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Эффективность</h3>
+<p>Высокая производительность и стабильный результат.</p>
+</div>
+
+<div class="card">
+<h3>Безопасность</h3>
+<p>Соответствует современным стандартам качества.</p>
+</div>
+
+<div class="card">
+<h3>Экономия</h3>
+<p>Снижение расхода и оптимизация процессов.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="gallery">
+
+<h2>Фото продукта</h2>
+
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpg">
+
+</section>
+
+
+<section class="contacts" id="contacts">
+
+<h2>Контакты</h2>
+
+<p>Email: nbi.rus@mail.ru</p>
+
+<p>Телефон: +7 951 519 30 12</p>
+
+<p>Адрес: Московская обл., г. Воскресенск, ул. Первостроителей стр. 2</p>
+
+</section>
+
+</div>
+
+
+<footer>
+
+Все права защищены. ООО "РУС" © 2023
+
+</footer>
+
+</body>
+</html>

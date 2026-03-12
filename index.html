@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>РУС — Новый продукт</title>
+<title>РУС — Инновационная химия</title>
 
 <style>
 
@@ -12,16 +12,25 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI, Arial;
+font-family:Segoe UI;
 }
 
 body{
-background:linear-gradient(135deg,#081521,#0e2a3f,#081521);
+background:#050b12;
 color:white;
-line-height:1.6;
+overflow-x:hidden;
 }
 
-/* контейнер */
+/* CANVAS MOLECULES */
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* container */
 
 .container{
 width:90%;
@@ -29,7 +38,7 @@ max-width:1200px;
 margin:auto;
 }
 
-/* header */
+/* HEADER */
 
 header{
 display:flex;
@@ -43,28 +52,28 @@ height:90px;
 }
 
 nav a{
-background:#19a9ff;
-padding:12px 25px;
+background:#1ea7ff;
+padding:12px 28px;
 border-radius:8px;
 text-decoration:none;
 color:white;
 font-weight:600;
-transition:0.3s;
+transition:.3s;
 }
 
 nav a:hover{
-background:#0084d6;
 transform:translateY(-2px);
+background:#0d8bd6;
 }
 
-/* hero */
+/* HERO */
 
 .hero{
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 flex-wrap:wrap;
-padding:80px 0;
+padding:100px 0;
 gap:40px;
 }
 
@@ -73,48 +82,46 @@ max-width:520px;
 }
 
 .hero-text h1{
-font-size:48px;
+font-size:50px;
 margin-bottom:20px;
 }
 
 .hero-text p{
-font-size:18px;
-opacity:0.85;
+opacity:.85;
 margin-bottom:30px;
 }
 
 .btn{
-background:#1ea7ff;
+background:linear-gradient(45deg,#00b7ff,#0072ff);
 padding:16px 35px;
-border-radius:8px;
+border-radius:10px;
 text-decoration:none;
 color:white;
 font-weight:600;
 display:inline-block;
-transition:0.3s;
+transition:.3s;
 }
 
 .btn:hover{
-background:#0f8bd6;
 transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(0,140,255,.4);
 }
 
 .hero-img img{
 width:420px;
-max-width:100%;
-filter:drop-shadow(0 0 20px rgba(0,150,255,0.6));
+filter:drop-shadow(0 0 25px rgba(0,200,255,.5));
 }
 
-/* преимущества */
+/* FEATURES */
 
 .features{
-padding:80px 0;
+padding:100px 0;
 text-align:center;
 }
 
 .features h2{
-font-size:32px;
 margin-bottom:50px;
+font-size:36px;
 }
 
 .cards{
@@ -126,11 +133,11 @@ justify-content:center;
 
 .card{
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 padding:35px;
 border-radius:15px;
 width:260px;
-transition:0.3s;
+transition:.4s;
 border:1px solid rgba(255,255,255,0.08);
 }
 
@@ -139,62 +146,53 @@ transform:translateY(-10px);
 background:rgba(255,255,255,0.08);
 }
 
-.card h3{
-margin-bottom:10px;
-}
+/* FORM */
 
-/* галерея */
-
-.gallery{
-padding:80px 0;
+.form-section{
+padding:100px 0;
 text-align:center;
 }
 
-.gallery h2{
-margin-bottom:40px;
-font-size:32px;
+form{
+max-width:500px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:15px;
 }
 
-.gallery img{
-width:260px;
-margin:10px;
-border-radius:12px;
-transition:0.4s;
+input,textarea{
+padding:15px;
+border-radius:8px;
+border:none;
+background:#0f1d29;
+color:white;
 }
 
-.gallery img:hover{
-transform:scale(1.05);
+button{
+padding:15px;
+border:none;
+border-radius:8px;
+background:linear-gradient(45deg,#00b7ff,#0072ff);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
 }
 
-/* контакты */
-
-.contacts{
-padding:80px 0;
-text-align:center;
+button:hover{
+transform:translateY(-2px);
 }
 
-.contacts h2{
-margin-bottom:30px;
-font-size:32px;
-}
-
-.contacts p{
-margin:10px 0;
-font-size:18px;
-}
-
-/* footer */
+/* FOOTER */
 
 footer{
-background:#050d14;
-padding:30px;
 text-align:center;
-margin-top:50px;
-font-size:14px;
-opacity:0.8;
+padding:40px;
+opacity:.7;
 }
 
-/* адаптив */
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -204,121 +202,209 @@ text-align:center;
 }
 
 .hero-img img{
-width:320px;
+width:300px;
 }
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-<div class="container">
+    <canvas id="bg"></canvas>
 
-<header>
+    <div class="container">
 
-<div class="logo">
-<img src="logo.png">
-</div>
+        <header>
 
-<nav>
-<a href="#contacts">Контакты</a>
-</nav>
+            <div class="logo">
+                <img src="logo.png">
+            </div>
 
-</header>
+            <nav>
+                <a href="#form">Заявка</a>
+            </nav>
 
-
-<section class="hero">
-
-<div class="hero-text">
-
-<h1>Новый продукт</h1>
-
-<p>
-Описание химической продукции.
-Валя даст текст о свойствах,
-применении и преимуществах продукта.
-</p>
-
-<a href="#contacts" class="btn">Связаться</a>
-
-</div>
-
-<div class="hero-img">
-
-<img src="product.png">
-
-</div>
-
-</section>
+        </header>
 
 
-<section class="features">
+        <section class="hero">
 
-<h2>Преимущества</h2>
+            <div class="hero-text">
 
-<div class="cards">
+                <h1>Инновационная химия нового поколения</h1>
 
-<div class="card">
-<h3>Эффективность</h3>
-<p>Высокая производительность и стабильный результат.</p>
-<p> Жидкий продукт, удобен в использовании <p>
-</div>
+                <p>
+                    Высокоэффективные химические решения
+                    для промышленности и очистки воды.
+                </p>
 
-<div class="card">
-<h3>Безопасность</h3>
-<p>Соответствует современным стандартам качества.</p>
-</div>
+                <a href="#form" class="btn">Оставить заявку</a>
 
-<div class="card">
-<h3>Экономия</h3>
-<p>Снижение расхода и оптимизация процессов.</p>
-  <p> Низкие дозировки – высокая эффективность <p>
-</div>
+            </div>
 
-</div>
+            <div class="hero-img">
 
-</section>
+                <img src="product.png">
+
+            </div>
+
+        </section>
 
 
-<section class="gallery">
+        <section class="features">
 
-<h2>Фото продукта</h2>
+            <h2>Преимущества</h2>
 
-<img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
+            <div class="cards">
 
-</section>
+                <div class="card">
+                    <h3>Эффективность</h3>
+                    <p>Высокая производительность и стабильный результат.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Безопасность</h3>
+                    <p>Соответствует международным стандартам.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Экономия</h3>
+                    <p>Снижение расходов до 30%.</p>
+                </div>
+
+            </div>
+
+        </section>
 
 
-<section class="contacts" id="contacts">
+        <section class="form-section" id="form">
 
-<h2>Контакты</h2>
+            <h2>Оставить заявку</h2>
 
-<p>Email: nbi.rus@mail.ru</p>
+            <form id="telegramForm">
 
-<p>Телефон: +7 951 519 30 12</p>
+                <input type="text" id="name" placeholder="Ваше имя" required>
+                <input type="tel" id="phone" placeholder="Телефон" required>
+<textarea id="message" placeholder="Комментарий"></textarea>
 
-<p>Адрес: Московская обл., г. Воскресенск, ул. Первостроителей стр. 2</p>
+                <button type="submit">Отправить</button>
 
-</section>
+            </form>
 
-</div>
+        </section>
+
+    </div>
+    
+    <footer>
+       
+        Контакты
+       
+        Email: nbi.rus@mail.ru
+        
+        Телефон: +79515193012
+        
+        Адрес: 140200, Московская обл., г. Воскресенск, ул. Первостроителей стр. 2
+        ООО "РУС" © 2026
+
+    </footer>
 
 
-<footer>
+    <script>
 
-Все права защищены. ООО "РУС" © 2023
+        /* MOLECULE BACKGROUND */
 
-</footer>
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+
+        for (let i = 0; i < 80; i++) {
+
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - .5) * 0.6,
+                vy: (Math.random() - .5) * 0.6
+            })
+
+        }
+
+        function animate() {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = "#00c3ff";
+                ctx.fill();
+
+                particles.forEach(p2 => {
+
+                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+
+                    if (dist < 120) {
+
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = "rgba(0,195,255,0.1)";
+                        ctx.stroke();
+
+                    }
+
+                })
+
+            })
+
+            requestAnimationFrame(animate)
+
+        }
+
+        animate();
+
+        /* TELEGRAM FORM */
+
+        document.getElementById("telegramForm").addEventListener("submit", function (e) {
+
+            e.preventDefault()
+
+            let name = document.getElementById("name").value
+            let phone = document.getElementById("phone").value
+            let message = document.getElementById("message").value
+
+            let text = `Заявка с сайта\nИмя: ${name}\nТелефон: ${phone}\nСообщение: ${message}`
+
+            fetch(`https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage`, {
+
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    chat_id: "YOUR_CHAT_ID",
+                    text: text
+                })
+
+            })
+
+            alert("Заявка отправлена")
+
+        })
+
+    </script>
 
 </body>
-
 </html>
-
-
-

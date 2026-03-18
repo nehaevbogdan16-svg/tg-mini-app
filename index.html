@@ -14,134 +14,113 @@ body {
     color: white;
 }
 
-/* OVERLAY */
 .overlay {
     background: rgba(0,0,0,0.85);
     min-height: 100vh;
 }
 
-/* HEADER */
 .header {
     text-align: center;
-    padding: 40px 20px;
-    border-bottom: 3px solid #facc15;
+    padding: 30px;
+    border-bottom: 2px solid #facc15;
 }
 
 .header img {
-    width: 110px;
+    width: 90px;
     border-radius: 50%;
     border: 2px solid #facc15;
 }
 
 .header h1 {
-    margin-top: 10px;
     color: #facc15;
 }
 
-/* CONTAINER */
 .container {
     width: 90%;
     margin: auto;
 }
 
-/* SECTIONS */
 .section {
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .section h2 {
     color: #facc15;
-    border-left: 5px solid #facc15;
+    border-left: 4px solid #facc15;
     padding-left: 10px;
 }
 
-/* MEMBERS */
-.members {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+/* СПИСОК ИГРОКОВ */
+.player-list {
+    margin-top: 15px;
 }
 
-.member {
+.player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: #020617;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
     border: 1px solid #1e293b;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.5s forwards;
+    transition: 0.2s;
 }
 
-.member:hover {
-    transform: scale(1.03);
+.player:hover {
     border-color: #facc15;
+    transform: scale(1.01);
 }
 
-/* PRO PLAYERS */
-.pro {
-    border: 2px solid gold;
-    box-shadow: 0 0 15px gold;
-}
-
-/* TOP BLOCK */
-.topPlayers .board {
-    font-weight: bold;
-}
-
-/* PLAYER TOP */
-.top {
+/* ЛЕВАЯ ЧАСТЬ */
+.left {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid #facc15;
+.rank {
+    width: 25px;
 }
 
-.rank {
-    width: 35px;
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
 }
 
 .nickname {
-    font-size: 18px;
     font-weight: bold;
 }
 
 .uid {
-    font-size: 12px;
+    font-size: 11px;
     color: #94a3b8;
 }
 
-/* STATS */
+/* ПРАВАЯ ЧАСТЬ (СТАТА) */
 .stats {
-    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
 }
 
-.stat {
-    margin-bottom: 10px;
-}
-
-.bar {
-    height: 8px;
-    background: #1e293b;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.fill {
-    height: 100%;
-    background: #facc15;
+/* ПРО ИГРОК */
+.pro {
+    border: 1px solid gold;
+    box-shadow: 0 0 8px gold;
 }
 
 /* BOARDS */
 .board {
     background: #020617;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
     margin-top: 10px;
     border-left: 3px solid #facc15;
 }
@@ -150,28 +129,16 @@ body {
 .footer {
     text-align: center;
     padding: 20px;
-    margin-top: 40px;
+    margin-top: 30px;
     background: black;
-}
-
-/* ANIMATION */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* MOBILE */
 @media (max-width: 600px) {
-    .top {
+    .stats {
         flex-direction: column;
-        text-align: center;
-    }
-
-    .avatar {
-        width: 80px;
-        height: 80px;
+        gap: 3px;
+        text-align: right;
     }
 }
 </style>
@@ -191,13 +158,13 @@ body {
 <!-- ТОП -->
 <div class="section">
     <h2>🏆 Топ игроков</h2>
-    <div id="topPlayers" class="topPlayers"></div>
+    <div id="topPlayers"></div>
 </div>
 
 <!-- УЧАСТНИКИ -->
 <div class="section">
-    <h2>🎮 Состав клана</h2>
-    <div class="members"></div>
+    <h2>🎮 Участники</h2>
+    <div class="player-list" id="players"></div>
 </div>
 
 <!-- ОБЪЯВЛЕНИЯ -->
@@ -227,69 +194,38 @@ body {
 
 <script>
 const players = [
-  {
-    uid: "123456789",
-    name: "PlayerOne",
-    avatar: "user1.jpg",
-    rank: "rank.png",
-    kd: 4.5,
-    wins: 120,
-    damage: 850
-  },
-  {
-    uid: "987654321",
-    name: "ProKiller",
-    avatar: "user2.jpg",
-    rank: "rank.png",
-    kd: 3.2,
-    wins: 80,
-    damage: 600
-  }
+  { uid: "123456789", name: "PlayerOne", avatar: "user1.jpg", rank: "rank.png", kd: 4.5, wins: 120 },
+  { uid: "987654321", name: "ProKiller", avatar: "user2.jpg", rank: "rank.png", kd: 3.2, wins: 80 }
 ];
 
-// РЕНДЕР ИГРОКОВ
-const container = document.querySelector('.members');
+// СПИСОК
+const container = document.getElementById('players');
 
-players.forEach((p, index) => {
+players.forEach(p => {
     container.innerHTML += `
-    <div class="member ${p.kd > 4 ? 'pro' : ''}" style="animation-delay:${index * 0.1}s">
-        <div class="top">
+    <div class="player ${p.kd > 4 ? 'pro' : ''}">
+        <div class="left">
             <img class="rank" src="${p.rank}">
             <img class="avatar" src="${p.avatar}">
-            <div>
+            <div class="info">
                 <div class="nickname">${p.name}</div>
                 <div class="uid">UID: ${p.uid}</div>
             </div>
         </div>
 
         <div class="stats">
-            <div class="stat">
-                <div>KD: ${p.kd}</div>
-                <div class="bar"><div class="fill" style="width:${p.kd * 20}%"></div></div>
-            </div>
-
-            <div class="stat">
-                <div>Победы: ${p.wins}</div>
-                <div class="bar"><div class="fill" style="width:${p.wins}%"></div></div>
-            </div>
-
-            <div class="stat">
-                <div>Урон: ${p.damage}</div>
-                <div class="bar"><div class="fill" style="width:${p.damage / 10}%"></div></div>
-            </div>
+            <div>KD: ${p.kd}</div>
+            <div>Wins: ${p.wins}</div>
         </div>
     </div>
     `;
 });
 
-// ТОП ИГРОКОВ
+// ТОП
+const top = [...players].sort((a,b)=>b.kd-a.kd).slice(0,3);
 const topContainer = document.getElementById('topPlayers');
 
-const topPlayers = [...players]
-    .sort((a, b) => b.kd - a.kd)
-    .slice(0, 3);
-
-topPlayers.forEach((p, i) => {
+top.forEach((p,i)=>{
     topContainer.innerHTML += `
     <div class="board">
         🥇 #${i+1} ${p.name} — KD: ${p.kd}

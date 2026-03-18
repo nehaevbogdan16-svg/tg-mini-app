@@ -1,533 +1,163 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Клан PUBG</title>
 
-    <title>РУС — Инновационная химия</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+}
 
-    <style>
+/* HEADER */
+.header {
+    text-align: center;
+    padding: 30px;
+    background: #020617;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Segoe UI;
-        }
+.header img {
+    width: 100px;
+    border-radius: 50%;
+}
 
-        body {
-            background: #050b12;
-            color: white;
-            overflow-x: hidden;
-        }
+.header h1 {
+    margin: 10px 0 0;
+}
 
-        /* CANVAS MOLECULES */
+/* CONTAINER */
+.container {
+    width: 90%;
+    margin: auto;
+}
 
-        #bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
+/* SECTIONS */
+.section {
+    margin-top: 30px;
+}
 
-        /* container */
+.section h2 {
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 10px;
+}
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-        }
+/* MEMBERS */
+.members {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
 
-        /* HEADER */
+.member {
+    background: #020617;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-        }
+.member img.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 
-        .logo img {
-            height: 120px;
-        }
+.rank {
+    width: 30px;
+    height: 30px;
+}
 
-        nav a {
-            background: #1ea7ff;
-            padding: 12px 28px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            transition: .3s;
-        }
+/* BOARDS */
+.board {
+    background: #020617;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 
-            nav a:hover {
-                transform: translateY(-2px);
-                background: #0d8bd6;
-            }
-
-        /* HERO */
-
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            padding: 100px 0;
-            gap: 40px;
-        }
-
-        .hero-text {
-            max-width: 520px;
-        }
-
-            .hero-text h1 {
-                font-size: 50px;
-                margin-bottom: 20px;
-            }
-
-            .hero-text p {
-                opacity: .85;
-                margin-bottom: 30px;
-            }
-
-        .btn {
-            background: linear-gradient(45deg,#00b7ff,#0072ff);
-            padding: 16px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            display: inline-block;
-            transition: .3s;
-        }
-
-            .btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 30px rgba(0,140,255,.4);
-            }
-
-        .hero-img img {
-            width: 420px;
-            filter: drop-shadow(0 0 25px rgba(0,200,255,.5));
-        }
-
-        /* Описание продукта */
-        .product-description {
-            padding: 80px 0;
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-            .product-description h2 {
-                font-size: 36px;
-                margin-bottom: 30px;
-                text-align: center;
-            }
-
-            .product-description p {
-                font-size: 18px;
-                line-height: 1.6;
-                margin-bottom: 20px;
-            }
-
-            .product-description ul {
-                margin-left: 20px;
-            }
-
-        /* Галерея продукта */
-        .product-gallery {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-            .product-gallery h2 {
-                font-size: 36px;
-                margin-bottom: 40px;
-            }
-
-        .gallery-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-            .gallery-images img {
-                width: 220px;
-                border-radius: 12px;
-                transition: .3s;
-                cursor: pointer;
-            }
-
-                .gallery-images img:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0 10px 30px rgba(0,195,255,.3);
-                }
-
-        /* FEATURES */
-
-        .features {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-            .features h2 {
-                margin-bottom: 50px;
-                font-size: 36px;
-            }
-
-        .cards {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            padding: 35px;
-            border-radius: 15px;
-            width: 260px;
-            transition: .4s;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-            .card:hover {
-                transform: translateY(-10px);
-                background: rgba(255,255,255,0.08);
-            }
-
-        /* FORM */
-
-        .form-section {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        form {
-            max-width: 500px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        input, textarea {
-            padding: 15px;
-            border-radius: 8px;
-            border: none;
-            background: #0f1d29;
-            color: white;
-        }
-
-        button {
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg,#00b7ff,#0072ff);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: .3s;
-        }
-
-            button:hover {
-                transform: translateY(-2px);
-            }
-
-        /* FOOTER */
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            opacity: .7;
-        }
-
-        /* MOBILE */
-
-        @media(max-width:900px) {
-
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-img img {
-                width: 300px;
-            }
-
-            .gallery-images img {
-                width: 45%;
-            }
-        }
-    </style>
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background: #020617;
+}
+</style>
 </head>
 
 <body>
 
-    <canvas id="bg"></canvas>
+<!-- HEADER -->
+<div class="header">
+    <img src="clan-avatar.png" alt="Аватар клана">
+    <h1>CLAN NAME</h1>
+</div>
 
-    <div class="container">
+<div class="container">
 
-        <header>
+<!-- MEMBERS -->
+<div class="section">
+    <h2>Участники</h2>
+    <div class="members">
 
-            <div class="logo">
-                <img src="logo.png">
+        <div class="member">
+            <img class="rank" src="rank.png">
+            <img class="avatar" src="user1.jpg">
+            <div>
+                <div>UID: 123456789</div>
+                <div>PlayerOne</div>
             </div>
+        </div>
 
-            <nav>
-                <a href="#form">Оставить заявку</a>
-            </nav>
-
-        </header>
-
-        <!-- HERO -->
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <h1>Инновационная химия нового поколения</h1>
-
-                <p>
-                    Высокоэффективные химические решения
-                    для промышленности и очистки воды.
-                </p>
-
-                <a href="#contacts" class="btn">Контакты</a>
-
+        <div class="member">
+            <img class="rank" src="rank.png">
+            <img class="avatar" src="user2.jpg">
+            <div>
+                <div>UID: 987654321</div>
+                <div>ProKiller</div>
             </div>
-
-            <div class="hero-img">
-
-                <img src="product.png">
-
-            </div>
-
-        </section>
-
-        <!-- ПОДРОБНОЕ ОПИСАНИЕ ПРОДУКТА -->
-        <section class="product-description" id="description">
-            <h2>Подробное описание продукта</h2>
-            <p>
-                Наш продукт — инновационное химическое решение нового поколения,
-                предназначенное для промышленной очистки воды и повышения эффективности
-                технологических процессов. Используя передовые технологии, мы гарантируем
-                стабильность, безопасность и экономию для вашего производства.
-            </p>
-            <p>
-                Особенности продукта:
-                <ul>
-                    <li>Высокая концентрация активных веществ</li>
-                    <li>Экологически безопасный состав</li>
-                    <li>Сертифицирован по международным стандартам</li>
-                    <li>Длительный срок хранения и простота применения</li>
-                </ul>
-            </p>
-        </section>
-
-        <!-- ДОПОЛНИТЕЛЬНАЯ ГАЛЕРЕЯ ФОТО -->
-        <section class="product-gallery" id="gallery">
-            <h2>Фотографии продукции</h2>
-            <div class="gallery-images">
-                <img src="photo1.jpg" alt="Продукт 1">
-                <img src="photo2.jpg" alt="Продукт 2">
-                <img src="photo3.jpg" alt="Продукт 3">
-                <img src="photo4.jpg" alt="Продукт 4">
-                <img src="photo5.jpeg" alt="Продукт 5">
-            </div>
-        </section>
-
-        <!-- FEATURES -->
-        <section class="features">
-
-            <h2>Преимущества</h2>
-
-            <div class="cards">
-
-                <div class="card">
-                    <h3>Эффективность</h3>
-                    <p>Высокая производительность и стабильный результат.</p>
-                </div>
-
-                <div class="card">
-                    <h3>Безопасность</h3>
-                    <p>Соответствует международным стандартам.</p>
-                </div>
-
-                <div class="card">
-                    <h3>Экономия</h3>
-                    <p>Снижение расходов до 30%.</p>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- FORM -->
-        <section class="form-section" id="form">
-
-            <h2>Оставить заявку</h2>
-
-            <form id="telegramForm">
-
-                <input type="text" id="name" placeholder="Ваше ФИО" required>
-                <input type="tel" id="phone" placeholder="Телефон/Почта" required>
-                <textarea id="message" placeholder="Комментарий"></textarea>
-
-                <button type="submit">Отправить</button>
-
-            </form>
-
-        </section>
+        </div>
 
     </div>
+</div>
 
-    <!-- FOOTER + CONTACTS -->
-    <footer>
+<!-- ANNOUNCEMENTS -->
+<div class="section">
+    <h2>Объявления</h2>
 
-        <section class="contacts" id="contacts">
+    <div class="board">
+        🔥 Тренировка сегодня в 20:00
+    </div>
 
-            <h2>Контакты</h2>
+    <div class="board">
+        ⚠️ Обновление состава клана
+    </div>
 
-            <p>Телефон: +7 951 519 30 12</p>
+</div>
 
-            <p>Email: nbi.rus@mail.ru</p>
+<!-- CUSTOM ROOMS -->
+<div class="section">
+    <h2>Кастомки</h2>
 
-            <p>
-                Адрес: Московская обл., г. Воскресенск,
-                ул. Первостроителей стр. 2
-            </p>
+    <div class="board">
+        🗓 25 марта — TDM турнир<br>
+        ⏰ 21:00<br>
+        🔑 Пароль: 1234
+    </div>
 
-        </section>
-        ООО "РУС" © 2026
+</div>
 
-    </footer>
+</div>
 
-    <script>
-
-        /* MOLECULE BACKGROUND */
-
-        const canvas = document.getElementById("bg");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-
-        for (let i = 0; i < 80; i++) {
-
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - .5) * 0.6,
-                vy: (Math.random() - .5) * 0.6
-            })
-
-        }
-
-        function animate() {
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(p => {
-
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-                ctx.fillStyle = "#00c3ff";
-                ctx.fill();
-
-                particles.forEach(p2 => {
-
-                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-
-                    if (dist < 120) {
-
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = "rgba(0,195,255,0.1)";
-                        ctx.stroke();
-
-                    }
-
-                })
-
-            })
-
-            requestAnimationFrame(animate)
-
-        }
-
-        animate();
-
-        /* TELEGRAM FORM */
-
-        document.getElementById("telegramForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            // Получаем значения из формы
-            let name = document.getElementById("name").value.trim();
-            let phone = document.getElementById("phone").value.trim();
-            let message = document.getElementById("message").value.trim();
-
-            // Проверка, чтобы текст не был пустым
-            if (!name && !phone && !message) {
-                alert("Пожалуйста, заполните хотя бы одно поле.");
-                return;
-            }
-
-            // Текущая дата и время
-            let now = new Date();
-            let datetime = now.toLocaleString();
-
-            // Форматируем сообщение красиво через Markdown
-            let text = `*Новая заявка с сайта афиш*\n\n` +
-                `*Имя:* ${name || "-"}\n` +
-                `*Телефон:* ${phone || "-"}\n` +
-                `*Комментарий:* ${message || "-"}\n` +
-                `*Время заявки:* ${datetime}`;
-
-            // Массив всех chat_id, куда будет отправляться заявка
-            const chatIds = [
-                "8064624193", // первый
-                "2053617850", // второй
-                // можно добавить до 5
-            ];
-
-            // Отправляем сообщение каждому chat_id
-            chatIds.forEach(chat_id => {
-                fetch(`https://api.telegram.org/bot8646624457:AAFwPvEGJE6wgZis1qpf_OElXa3nmULsx3c/sendMessage`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        chat_id: chat_id,
-                        text: text,
-                        parse_mode: "Markdown"
-                    })
-                })
-                    .then(res => console.log(`Отправлено в chat_id ${chat_id}`))
-                    .catch(err => console.error(err));
-            });
-
-            // Очищаем форму
-            document.getElementById("telegramForm").reset();
-
-            alert("Заявка отправлена!");
-        });
-    </script>
+<!-- FOOTER -->
+<div class="footer">
+    © Клан PUBG Mobile
+</div>
 
 </body>
 </html>
-

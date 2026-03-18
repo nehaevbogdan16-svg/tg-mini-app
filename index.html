@@ -8,16 +8,22 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(180deg, #0a0f1c, #020617);
+    font-family: Arial, sans-serif;
+    background: url('bg.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: white;
+}
+
+/* OVERLAY */
+.overlay {
+    background: rgba(0,0,0,0.85);
+    min-height: 100vh;
 }
 
 /* HEADER */
 .header {
     text-align: center;
     padding: 40px 20px;
-    background: #000;
     border-bottom: 3px solid #facc15;
 }
 
@@ -30,15 +36,15 @@ body {
 .header h1 {
     margin-top: 10px;
     color: #facc15;
-    letter-spacing: 2px;
 }
 
-/* SECTIONS */
+/* CONTAINER */
 .container {
     width: 90%;
     margin: auto;
 }
 
+/* SECTIONS */
 .section {
     margin-top: 40px;
 }
@@ -61,7 +67,9 @@ body {
     padding: 20px;
     border-radius: 12px;
     border: 1px solid #1e293b;
-    transition: 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s forwards;
 }
 
 .member:hover {
@@ -69,6 +77,18 @@ body {
     border-color: #facc15;
 }
 
+/* PRO PLAYERS */
+.pro {
+    border: 2px solid gold;
+    box-shadow: 0 0 15px gold;
+}
+
+/* TOP BLOCK */
+.topPlayers .board {
+    font-weight: bold;
+}
+
+/* PLAYER TOP */
 .top {
     display: flex;
     align-items: center;
@@ -105,10 +125,6 @@ body {
     margin-bottom: 10px;
 }
 
-.stat span {
-    font-size: 13px;
-}
-
 .bar {
     height: 8px;
     background: #1e293b;
@@ -135,114 +151,152 @@ body {
     text-align: center;
     padding: 20px;
     margin-top: 40px;
-    background: #000;
-    color: #888;
+    background: black;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .top {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<div class="overlay">
+
 <div class="header">
     <img src="clan-avatar.png">
-    <h1>MIRAS Family</h1>
+    <h1>RUS CLAN</h1>
 </div>
 
 <div class="container">
 
+<!-- ТОП -->
+<div class="section">
+    <h2>🏆 Топ игроков</h2>
+    <div id="topPlayers" class="topPlayers"></div>
+</div>
+
 <!-- УЧАСТНИКИ -->
 <div class="section">
-    <h2>Состав клана</h2>
-
-    <div class="members">
-
-        <!-- ИГРОК -->
-        <div class="member">
-            <div class="top">
-                <img class="rank" src="rank.png">
-                <img class="avatar" src="user1.jpg">
-                <div>
-                    <div class="nickname">ツGU×Bogdan</div>
-                    <div class="uid">UID: 51850708652</div>
-                </div>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <span>KD: 4.5</span>
-                    <div class="bar"><div class="fill" style="width: 90%"></div></div>
-                </div>
-
-                <div class="stat">
-                    <span>Победы: 120</span>
-                    <div class="bar"><div class="fill" style="width: 80%"></div></div>
-                </div>
-
-                <div class="stat">
-                    <span>Урон: 850</span>
-                    <div class="bar"><div class="fill" style="width: 70%"></div></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ИГРОК -->
-        <div class="member">
-            <div class="top">
-                <img class="rank" src="rank.png">
-                <img class="avatar" src="user2.jpg">
-                <div>
-                    <div class="nickname">ProKiller</div>
-                    <div class="uid">UID: 987654321</div>
-                </div>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <span>KD: 3.2</span>
-                    <div class="bar"><div class="fill" style="width: 65%"></div></div>
-                </div>
-
-                <div class="stat">
-                    <span>Победы: 80</span>
-                    <div class="bar"><div class="fill" style="width: 60%"></div></div>
-                </div>
-
-                <div class="stat">
-                    <span>Урон: 600</span>
-                    <div class="bar"><div class="fill" style="width: 50%"></div></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <h2>🎮 Состав клана</h2>
+    <div class="members"></div>
 </div>
 
 <!-- ОБЪЯВЛЕНИЯ -->
 <div class="section">
-    <h2>Объявления</h2>
-
+    <h2>📢 Объявления</h2>
     <div class="board">🔥 Турнир в пятницу 20:00</div>
     <div class="board">⚠️ Ищем новых игроков</div>
-
 </div>
 
 <!-- КАСТОМКИ -->
 <div class="section">
-    <h2>Кастомки</h2>
-
+    <h2>🗺 Кастомки</h2>
     <div class="board">
         📅 25 марта<br>
         ⏰ 21:00<br>
         🔑 Пароль: 1234
     </div>
-
 </div>
 
 </div>
 
 <div class="footer">
-    PUBG Mobile Clan Site
+    PUBG Clan Site
 </div>
+
+</div>
+
+<script>
+const players = [
+  {
+    uid: "123456789",
+    name: "PlayerOne",
+    avatar: "user1.jpg",
+    rank: "rank.png",
+    kd: 4.5,
+    wins: 120,
+    damage: 850
+  },
+  {
+    uid: "987654321",
+    name: "ProKiller",
+    avatar: "user2.jpg",
+    rank: "rank.png",
+    kd: 3.2,
+    wins: 80,
+    damage: 600
+  }
+];
+
+// РЕНДЕР ИГРОКОВ
+const container = document.querySelector('.members');
+
+players.forEach((p, index) => {
+    container.innerHTML += `
+    <div class="member ${p.kd > 4 ? 'pro' : ''}" style="animation-delay:${index * 0.1}s">
+        <div class="top">
+            <img class="rank" src="${p.rank}">
+            <img class="avatar" src="${p.avatar}">
+            <div>
+                <div class="nickname">${p.name}</div>
+                <div class="uid">UID: ${p.uid}</div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div>KD: ${p.kd}</div>
+                <div class="bar"><div class="fill" style="width:${p.kd * 20}%"></div></div>
+            </div>
+
+            <div class="stat">
+                <div>Победы: ${p.wins}</div>
+                <div class="bar"><div class="fill" style="width:${p.wins}%"></div></div>
+            </div>
+
+            <div class="stat">
+                <div>Урон: ${p.damage}</div>
+                <div class="bar"><div class="fill" style="width:${p.damage / 10}%"></div></div>
+            </div>
+        </div>
+    </div>
+    `;
+});
+
+// ТОП ИГРОКОВ
+const topContainer = document.getElementById('topPlayers');
+
+const topPlayers = [...players]
+    .sort((a, b) => b.kd - a.kd)
+    .slice(0, 3);
+
+topPlayers.forEach((p, i) => {
+    topContainer.innerHTML += `
+    <div class="board">
+        🥇 #${i+1} ${p.name} — KD: ${p.kd}
+    </div>
+    `;
+});
+</script>
 
 </body>
 </html>

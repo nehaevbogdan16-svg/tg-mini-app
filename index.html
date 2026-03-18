@@ -3,73 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Клан PUBG</title>
+<title>PUBG Clan</title>
 
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f172a;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(180deg, #0a0f1c, #020617);
     color: white;
 }
 
 /* HEADER */
 .header {
     text-align: center;
-    padding: 30px;
-    background: #020617;
+    padding: 40px 20px;
+    background: #000;
+    border-bottom: 3px solid #facc15;
 }
 
 .header img {
-    width: 100px;
+    width: 110px;
     border-radius: 50%;
+    border: 2px solid #facc15;
 }
 
 .header h1 {
-    margin: 10px 0 0;
+    margin-top: 10px;
+    color: #facc15;
+    letter-spacing: 2px;
 }
 
-/* CONTAINER */
+/* SECTIONS */
 .container {
     width: 90%;
     margin: auto;
 }
 
-/* SECTIONS */
 .section {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .section h2 {
-    border-bottom: 2px solid #1e293b;
-    padding-bottom: 10px;
+    color: #facc15;
+    border-left: 5px solid #facc15;
+    padding-left: 10px;
 }
 
 /* MEMBERS */
 .members {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .member {
     background: #020617;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    transition: 0.3s;
+}
+
+.member:hover {
+    transform: scale(1.03);
+    border-color: #facc15;
+}
+
+.top {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.member img.avatar {
-    width: 50px;
-    height: 50px;
+.avatar {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    border: 2px solid #facc15;
 }
 
 .rank {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+}
+
+.nickname {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.uid {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* STATS */
+.stats {
+    margin-top: 15px;
+}
+
+.stat {
+    margin-bottom: 10px;
+}
+
+.stat span {
+    font-size: 13px;
+}
+
+.bar {
+    height: 8px;
+    background: #1e293b;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    background: #facc15;
 }
 
 /* BOARDS */
@@ -77,75 +126,112 @@ body {
     background: #020617;
     padding: 15px;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-top: 10px;
+    border-left: 3px solid #facc15;
 }
 
 /* FOOTER */
 .footer {
     text-align: center;
     padding: 20px;
-    margin-top: 30px;
-    background: #020617;
+    margin-top: 40px;
+    background: #000;
+    color: #888;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-    <img src="clan-avatar.png" alt="Аватар клана">
-    <h1>CLAN NAME</h1>
+    <img src="clan-avatar.png">
+    <h1>RUS CLAN</h1>
 </div>
 
 <div class="container">
 
-<!-- MEMBERS -->
+<!-- УЧАСТНИКИ -->
 <div class="section">
-    <h2>Участники</h2>
+    <h2>Состав клана</h2>
+
     <div class="members">
 
+        <!-- ИГРОК -->
         <div class="member">
-            <img class="rank" src="rank.png">
-            <img class="avatar" src="user1.jpg">
-            <div>
-                <div>UID: 123456789</div>
-                <div>PlayerOne</div>
+            <div class="top">
+                <img class="rank" src="rank.png">
+                <img class="avatar" src="user1.jpg">
+                <div>
+                    <div class="nickname">PlayerOne</div>
+                    <div class="uid">UID: 123456789</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span>KD: 4.5</span>
+                    <div class="bar"><div class="fill" style="width: 90%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <span>Победы: 120</span>
+                    <div class="bar"><div class="fill" style="width: 80%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <span>Урон: 850</span>
+                    <div class="bar"><div class="fill" style="width: 70%"></div></div>
+                </div>
             </div>
         </div>
 
+        <!-- ИГРОК -->
         <div class="member">
-            <img class="rank" src="rank.png">
-            <img class="avatar" src="user2.jpg">
-            <div>
-                <div>UID: 987654321</div>
-                <div>ProKiller</div>
+            <div class="top">
+                <img class="rank" src="rank.png">
+                <img class="avatar" src="user2.jpg">
+                <div>
+                    <div class="nickname">ProKiller</div>
+                    <div class="uid">UID: 987654321</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span>KD: 3.2</span>
+                    <div class="bar"><div class="fill" style="width: 65%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <span>Победы: 80</span>
+                    <div class="bar"><div class="fill" style="width: 60%"></div></div>
+                </div>
+
+                <div class="stat">
+                    <span>Урон: 600</span>
+                    <div class="bar"><div class="fill" style="width: 50%"></div></div>
+                </div>
             </div>
         </div>
 
     </div>
 </div>
 
-<!-- ANNOUNCEMENTS -->
+<!-- ОБЪЯВЛЕНИЯ -->
 <div class="section">
     <h2>Объявления</h2>
 
-    <div class="board">
-        🔥 Тренировка сегодня в 20:00
-    </div>
-
-    <div class="board">
-        ⚠️ Обновление состава клана
-    </div>
+    <div class="board">🔥 Турнир в пятницу 20:00</div>
+    <div class="board">⚠️ Ищем новых игроков</div>
 
 </div>
 
-<!-- CUSTOM ROOMS -->
+<!-- КАСТОМКИ -->
 <div class="section">
     <h2>Кастомки</h2>
 
     <div class="board">
-        🗓 25 марта — TDM турнир<br>
+        📅 25 марта<br>
         ⏰ 21:00<br>
         🔑 Пароль: 1234
     </div>
@@ -154,9 +240,8 @@ body {
 
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
-    © Клан PUBG Mobile
+    PUBG Mobile Clan Site
 </div>
 
 </body>

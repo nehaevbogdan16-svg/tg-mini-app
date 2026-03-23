@@ -149,6 +149,66 @@
             font-weight: bold;
             margin-top: 20px;
         }
+      /* 📱 МОБИЛЬНАЯ ВЕРСИЯ */
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    /* ЛИДЕРЫ */
+    .leaders {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .leader img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .leader.main img {
+        transform: scale(1.1);
+    }
+
+    /* ОСНОВНОЙ БЛОК */
+    .main {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .members, .top {
+        width: 100%;
+    }
+
+    /* УЧАСТНИКИ */
+    .member {
+        padding: 12px;
+    }
+
+    .member img {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* ТОП */
+    .top-item {
+        font-size: 14px;
+    }
+
+    /* КНОПКА */
+    button {
+        width: 100%;
+    }
+
+}
     </style>
 </head>
 <body>
